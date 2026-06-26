@@ -1,7 +1,16 @@
 {
   "name": "website-scrapper",
+  "type": "module",
   "packageManager": "yarn@4.11.0",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "start": "node app.js"
+  },
   "dependencies": {
+    "dotenv": "^17.4.2",
     "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
   }
 }
