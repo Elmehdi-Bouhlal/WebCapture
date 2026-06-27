@@ -12,6 +12,18 @@ export class ForbiddenError extends AppError {
   }
 }
 
+export class ReachlimitError extends AppError {
+  constructor(message = 'Rate limit exceeded') {
+    super(message, 429);
+  }
+}
+
+export class UrlPingError extends AppError {
+  constructor(message = 'Website is not reachable') {
+    super(message, 500);
+  }
+}
+
 export class ConflictError extends AppError {
   constructor(message = 'Resource already exists') {
     super(message, 409);
