@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import { captureController } from '../controllers/screenshot.controller';
-import validateCaptureRequest from '../middlewares/validators/screenshot.validator';
+import ScreenshotController from '../controllers/screenshot.controller.js';
+import validateCaptureRequest from '../middlewares/validators/screenshot.validator.js';
 
 
 const router = Router();
 
-router.get('/analyze',validateCaptureRequest, captureController.capture);
+router.post('/analyze',validateCaptureRequest, ScreenshotController.capture);
 
 export default router;
