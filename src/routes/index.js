@@ -3,6 +3,6 @@ import screenshotRoutes from './screenshot.routes.js';
 
 const router = Router();
 
-router.use('/screenshots', screenshotRoutes);
+router.use('/webcapture', screenshotRoutes);
 
 export default router;
