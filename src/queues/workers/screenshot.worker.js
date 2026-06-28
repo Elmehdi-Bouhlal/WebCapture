@@ -1,9 +1,9 @@
-import ScreenshotQueueService from '../../services/screenshotQueue.service.js';
+import ScreenshotQueueService from '../../services/screenshotqueue.service.js';
 import ScreenShotRepository from '../../repositories/screenShot.repository.js';
 import QueueRepository from '../../repositories/queue.repository.js';
 import logger from '../../utils/logger.js';
 
-export const screenshotWorker = async (job) => {
+export const screenshotWorker = async ([job]) => {
   const { url, captureRequestId } = job.data;
 
   logger.info({
@@ -34,7 +34,6 @@ export const screenshotWorker = async (job) => {
       url,
       captureRequestId,
     });
-
   } catch (error) {
     await QueueRepository.updateQueueStatus(captureRequestId, 'failed');
 
@@ -48,5 +47,4 @@ export const screenshotWorker = async (job) => {
 
     throw error;
   }
-
 };

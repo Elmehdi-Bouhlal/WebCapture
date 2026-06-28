@@ -8,9 +8,11 @@ const startQueues = async () => {
     await boss.start();
     logger.info({ message: 'PgBoss started successfully' });
 
+    await boss.createQueue(QUEUE_NAME);
+    logger.info({ message: `Queue created: ${QUEUE_NAME}` });
+
     await boss.work(QUEUE_NAME, screenshotWorker);
     logger.info({ message: `Worker registered for queue: ${QUEUE_NAME}` });
-
   } catch (error) {
     logger.error({
       message: 'Failed to start PgBoss',
@@ -21,5 +23,5 @@ const startQueues = async () => {
   }
 };
 
-export { boss, QUEUE_NAME };
+export { boss };
 export default startQueues;

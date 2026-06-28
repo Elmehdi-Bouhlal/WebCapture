@@ -1,5 +1,5 @@
 import puppeteer from 'puppeteer';
-import logger from '../utils/logger';
+import logger from '../utils/logger.js';
 
 class BrowserService {
     constructor() {
@@ -39,4 +39,4 @@ class BrowserService {
     }
 }
 
-export default new BrowserService();
+export default BrowserService;

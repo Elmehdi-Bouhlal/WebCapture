@@ -1,5 +1,5 @@
-import logger from '../utils/logger';
-import config from '../config';
+import logger from '../utils/logger.js';
+import config from '../../config/index.js';
 
 class FlareSolverrService {
     async getCookies(url) {
@@ -22,4 +22,4 @@ class FlareSolverrService {
     }
 }
 
-export default new FlareSolverrService();
+export default FlareSolverrService;

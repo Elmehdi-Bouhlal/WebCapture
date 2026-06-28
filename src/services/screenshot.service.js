@@ -1,8 +1,8 @@
 import logger from '../utils/logger.js';
 import config from '../../config/index.js';
 import StorageService from './storage.service.js';
-import SectionDetector from './sectionDetector.service.js';
-import MediaExtractor from './mediaExtractor.service.js';
+import SectionDetector from './sectiondetector.service.js';
+import MediaExtractor from './mediaextractor.service.js';
 
 class ScreenshotService {
   constructor(page) {

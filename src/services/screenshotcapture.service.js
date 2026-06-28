@@ -4,9 +4,9 @@ import { ReachlimitError, UrlPingError, ConflictError } from '../errors/index.js
 import { MAX_TRIES } from '../../config/constants.js';
 import WebsiteService from './website.service.js';
 import boss from '../../config/pgboss.js';
-import { QUEUE_NAME } from '../queues/index.js';
+import { QUEUE_NAME } from '../../config/constants.js';
 
-class ScreenshotService {
+class ScreenshotCaptureService {
   async capture(url, ip, retry = false) {
     const guestSession = await GuestSessionRepository.findOrCreate(ip);
     if (guestSession.is_blocked) throw new ReachlimitError('You have been permanently blocked');
@@ -43,4 +43,4 @@ class ScreenshotService {
   }
 }
 
-export default new ScreenshotService();
+export default new ScreenshotCaptureService();
