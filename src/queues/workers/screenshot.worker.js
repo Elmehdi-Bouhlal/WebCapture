@@ -1,3 +1,5 @@
+import ScreenshotQueueService from '../../services/screenshotQueue.service.js';
+import ScreenShotRepository from '../../repositories/screenShot.repository.js';
 import QueueRepository from '../../repositories/queue.repository.js';
 import logger from '../../utils/logger.js';
 
@@ -11,27 +13,21 @@ export const screenshotWorker = async (job) => {
   });
 
   try {
-
     await QueueRepository.updateQueueStatus(captureRequestId, 'processing');
+    const sections = await ScreenshotQueueService.capture(url, captureRequestId);
 
-    // Step 2 — take the screenshot
-    // this is where Puppeteer/Playwright will go later
-    const screenshot = await ScreenshotService.takeScreenshot(url);
+    for (const section of sections) {
+      await ScreenShotRepository.create(
+        {
+          r2Key: section.r2Key,
+          bucket: section.r2Bucket,
+          size: section.r2Size,
+        },
+        captureRequestId,
+      );
+    }
 
-    // Step 3 — save screenshot to storage
-    // this is where R2/S3 upload will go later
-    const savedFile = await StorageService.upload(screenshot, captureRequestId);
-
-    // Step 4 — save screenshot record to database
-    await ScreenshotRepository.create({
-      captureRequestId,
-      r2ObjectKey: savedFile.key,
-      r2BucketName: savedFile.bucket,
-      fileSizeBytes: savedFile.size,
-    });
-
-    // Step 5 — update status to completed
-    await CaptureRequestRepository.updateStatus(captureRequestId, 'completed');
+    await QueueRepository.updateQueueStatus(captureRequestId, 'completed');
 
     logger.info({
       message: 'Screenshot job completed',
@@ -40,9 +36,7 @@ export const screenshotWorker = async (job) => {
     });
 
   } catch (error) {
-
-    // update status to failed
-    await CaptureRequestRepository.updateStatus(captureRequestId, 'failed');
+    await QueueRepository.updateQueueStatus(captureRequestId, 'failed');
 
     logger.error({
       message: 'Screenshot job failed',
@@ -52,7 +46,6 @@ export const screenshotWorker = async (job) => {
       stack: error.stack,
     });
 
-    // rethrow so pg-boss marks job as failed
     throw error;
   }
 
