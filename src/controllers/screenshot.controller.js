@@ -10,7 +10,6 @@ class ScreenshotController {
       const retryBool = retry === true || retry === 'true';
 
       const result = await ScreenshotService.capture(url, ipAddress, retryBool);
-
       return ApiResponse.created(res, result, 'Screenshot request created');
     } catch (error) {
       next(error);
