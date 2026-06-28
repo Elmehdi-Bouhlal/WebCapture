@@ -7,6 +7,13 @@ export default {
     env: process.env.NODE_ENV || 'dev',
     flareSolver: process.env.FLARE_SOLVER,
   },
+  r2: {
+    accountId: process.env.R2_ACCOUNT_ID,
+    accessKeyId: process.env.R2_ACCESS_KEY_ID,
+    secretAccessKey: process.env.R2_SECRET_ACCESS_KEY,
+    bucketName: process.env.R2_BUCKET_NAME,
+    endpoint: process.env.R2_ENDPOINT,
+  },
   website_scrapper: {
     screen: {
       VIEWPORT_W: 1440,
