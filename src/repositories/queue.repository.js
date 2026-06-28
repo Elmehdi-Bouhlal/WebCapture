@@ -25,6 +25,17 @@ class QueueRepository {
       },
     });
   }
+
+  async updateQueueStatus(queueId, status) {
+    return await prisma.capture_requests.update({
+      where: {
+        id: queueId
+      },
+      data: {
+        status,
+      },
+    });
+  }
 }
 
 export default new QueueRepository();
